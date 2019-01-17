@@ -58,6 +58,7 @@
 		<lettuce.version>5.1.3.RELEASE</lettuce.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
 		<springfox.version>2.9.2</springfox.version>
+		<jackson.version>2.9.5</jackson.version>
 
 	</properties>
 
@@ -303,6 +304,22 @@
 				<artifactId>springfox-swagger-ui</artifactId>
 				<version>${springfox.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
 
 		</dependencies>
 

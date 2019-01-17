@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.apache.commons.lang3.SystemUtils;
 
-public class ConfigConsts {
+public class Consts {
 
     // 本地环境
     public static final String TEST = "test";
@@ -61,5 +61,12 @@ public class ConfigConsts {
     public static final String CTYPE_TEXT_PLAIN = "text/plain";
     public static final String CTYPE_APP_JSON = "application/json";
     public static final String HTTP_HOST = "HTTP_HOST";
+
+    /** UTF-8字符集 **/
+    public static final String DEFAULT_CHARSET = "UTF-8";
+
+    public static final String CLASSPATH_PREFIX = "classpath";
+
+    public static final String URL_PROTOCOL_FILE = "file";
 
 }
