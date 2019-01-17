@@ -24,6 +24,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * 
+ * @author liaoxiang
+ * @date 2019/01/17
+ */
 @Configuration
 @PropertySources(value = {@PropertySource(value = "classpath:config/db/redis-common.properties", encoding = "UTF-8"),
     @PropertySource(value = "classpath:config/db/redis-${spring.profiles.active}.properties", encoding = "UTF-8")})
