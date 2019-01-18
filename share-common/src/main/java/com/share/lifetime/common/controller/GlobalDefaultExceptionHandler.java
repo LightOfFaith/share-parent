@@ -16,12 +16,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import com.google.common.reflect.TypeToken;
@@ -45,6 +47,15 @@ public class GlobalDefaultExceptionHandler {
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<Map<String, Object>> exception(HttpServletRequest request, Throwable ex) {
         return handleError(request, HttpStatus.INTERNAL_SERVER_ERROR, ex);
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String exception(final Throwable throwable, final Model model) {
+        log.error("Exception during execution of application", throwable);
+        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
+        model.addAttribute("errorMessage", errorMessage);
+        return "error";
     }
 
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class, HttpMediaTypeException.class})
