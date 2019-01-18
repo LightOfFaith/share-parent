@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="log.directory" value="/apps/logs/share-web" />
+	<property name="log.context.name" value="share-web" />
+	<property name="log.file.name" value="${log.context.name}" />
+	<property name="log.info.file.name"
+		value="${log.context.name}-info"></property>
+	<property name="log.warn.file.name"
+		value="${log.context.name}-warn"></property>
+	<property name="log.error.file.name"
+		value="${log.context.name}-error" />
+	<property name="log.audit.file.name"
+		value="${log.context.name}-audit" />
+	<property name="log.sql.file.name"
+		value="${log.context.name}-sql" />
+	<property name="log.charset" value="UTF-8" />
+	<property name="log.maxHistory" value="30" />
+	<property name="log.pattern"
+		value="[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%-5level] [%class{36}] %L %M - %msg%xEx%n" />
+	<!-- <property name="log.pattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5level 
+		%class{36} %L %M - %msg%xEx%n" /> -->
+	<!-- <property name="log.pattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] 
+		[%thread] [%logger{50}] >>> %msg%n" /> -->
+	<property name="log.async.queue.size" value="1024" />
+
+	<contextName>${log.context.name}</contextName>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="${log.charset}">
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="AUDITLOG-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.directory}/${log.audit.file.name}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.audit.file.name}_%i.log
+			</fileNamePattern>
+			<!-- keep 10G' worth of history -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<append>true</append>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1GB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="${log.charset}">
+			<!-- 格式化输出：%d表示日期，%t表示线程名，%p 级别, %logger logger name最多36字节 %msg：日志消息，%n是换行符 -->
+			<pattern>${log.pattern}</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+	</appender>
+	<appender name="NORMALLOG-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.directory}/${log.file.name}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.file.name}_%i.log
+			</fileNamePattern>
+			<!-- keep 10G' worth of history -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<append>true</append>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1GB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="${log.charset}">
+			<!-- 格式化输出：%d表示日期，%t表示线程名，%p 级别, %logger logger name最多36字节 %msg：日志消息，%n是换行符 -->
+			<pattern>${log.pattern}</pattern>
+			<immediateFlush>true</immediateFlush>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- 处理INFO级别的日志，并把该日志放到/apps/logs/share-web/share-web-info.log文件中 -->
+	<appender name="RollingFileInfo"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.directory}/${log.info.file.name}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.info.file.name}_%i.log
+			</fileNamePattern>
+			<!-- keep 10G' worth of history -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<append>true</append>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1GB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="${log.charset}">
+			<!-- 格式化输出：%d表示日期，%t表示线程名，%p 级别, %logger logger name最多36字节 %msg：日志消息，%n是换行符 -->
+			<pattern>${log.pattern}</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- 处理WARN级别的日志，并把该日志放到/apps/logs/share-web/share-web-warn.log-warn.log文件中 -->
+	<appender name="RollingFileWarn"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.directory}/${log.warn.file.name}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.warn.file.name}_%i.log
+			</fileNamePattern>
+			<!-- keep 10G' worth of history -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<append>true</append>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1GB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="${log.charset}">
+			<!-- 格式化输出：%d表示日期，%t表示线程名，%p 级别, %logger logger name最多36字节 %msg：日志消息，%n是换行符 -->
+			<pattern>${log.pattern}</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!--处理ERROR级别的日志，并把该日志放到/apps/logs/share-web/share-web-error.log文件中 -->
+	<appender name="RollingFileError"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.directory}/${log.error.file.name}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.error.file.name}_%i.log
+			</fileNamePattern>
+			<!-- keep 10G' worth of history -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<append>true</append>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1GB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="${log.charset}">
+			<!-- 格式化输出：%d表示日期，%t表示线程名，%p 级别, %logger logger name最多36字节 %msg：日志消息，%n是换行符 -->
+			<pattern>${log.pattern}</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- Asynchronized log, for FILE only -->
+	<appender name="ASYNC_FILE"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<!-- Don't discard log, logback will discard TRACE, DEBUG, INFO log when 
+			queue 80% capacity reached by default. -->
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>${log.async.queue.size}</queueSize>
+		<appender-ref ref="FILE" />
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.context.name}-log.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>${log.maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder charset="${log.charset}">
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<!--Druid的日志记录追加器 -->
+	<appender name="DruidSqlRollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.directory}/${log.sql.file.name}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${log.directory}/${log.sql.file.name}_%i.log
+			</fileNamePattern>
+			<!-- keep 10G' worth of history -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<append>true</append>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1GB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="${log.charset}">
+			<!-- 格式化输出：%d表示日期，%t表示线程名，%p 级别, %logger logger name最多36字节 %msg：日志消息，%n是换行符 -->
+			<pattern>${log.pattern}</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+	</appender>
+
+	<!-- 按照每天生成日志文件（给开发查看普通运行信息的） -->
+	<appender name="DEV_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<Encoding>${log.charset}</Encoding>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.directory}/%d{yyyy-MM-dd}/${log.context.name}-dev.log
+			</FileNamePattern>
+			<MaxHistory>${log.maxHistory}</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${log.pattern}</pattern>
+		</layout>
+	</appender>
+
+
+	<!-- 按照每天生成日志文件（给开发查看全部调试信息的） -->
+	<appender name="DEBUG_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<Encoding>${log.charset}</Encoding>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.directory}/%d{yyyy-MM-dd}/${log.context.name}-debug.log
+			</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${log.pattern}</pattern>
+		</layout>
+	</appender>
+
+
+
+	<logger name="AUDITLOG" additivity="false" level="INFO">
+		<appender-ref ref="AUDITLOG-APPENDER" />
+	</logger>
+	<logger name="org.apache.zookeeper" additivity="false"
+		level="WARN" />
+	<logger name="org.apache.curator" additivity="false"
+		level="WARN" />
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="NORMALLOG-APPENDER" />
+		<appender-ref ref="RollingFileInfo" />
+		<appender-ref ref="RollingFileWarn" />
+		<appender-ref ref="RollingFileError" />
+		<appender-ref ref="ASYNC_FILE" />
+		<appender-ref ref="DEV_FILE" />
+		<appender-ref ref="DEBUG_FILE" />
+	</root>
+</configuration>

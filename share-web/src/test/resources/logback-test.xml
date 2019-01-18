@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="log.context.name" value="share-web" />
+	<property name="log.charset" value="UTF-8" />
+	<property name="log.pattern"
+		value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{50}] >>> %msg%n" />
+
+	<contextName>${log.context.name}</contextName>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="${log.charset}">
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ERROR"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<encoder charset="${log.charset}">
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ERROR" />
+	</root>
+</configuration>
