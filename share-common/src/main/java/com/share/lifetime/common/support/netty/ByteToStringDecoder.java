@@ -9,6 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ByteToStringDecoder extends ByteToMessageDecoder {
+
+    private final String charsetName;
+
+    public ByteToStringDecoder(String charsetName) {
+        this.charsetName = charsetName;
+    }
+
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         if (in.readableBytes() < 4) {
@@ -24,7 +31,7 @@ public class ByteToStringDecoder extends ByteToMessageDecoder {
         ByteBuf readBytes = in.readBytes(length);
         byte[] dst = new byte[length];
         readBytes.readBytes(dst);
-        String data = new String(dst, "UTF-8");
+        String data = new String(dst, charsetName);
         out.add(data);
     }
 

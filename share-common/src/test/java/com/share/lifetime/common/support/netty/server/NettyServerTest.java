@@ -6,7 +6,7 @@ public class NettyServerTest {
 
     @Test
     public void testRun() throws Exception {
-        NettyServer server = new NettyServer(8188);
+        NettyServer server = new NettyServer(8181);
         server.run();
     }
 

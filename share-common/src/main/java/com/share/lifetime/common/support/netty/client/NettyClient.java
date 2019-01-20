@@ -53,6 +53,8 @@ public class NettyClient {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(new RequestDataEncoder(), new ResponseDataDecoder(), clientHandler);
+                    // ch.pipeline().addLast(new StringToByteEncoder("UTF-8"), new ByteToStringDecoder("UTF-8"),
+                    // clientHandler);
                 }
             });
 

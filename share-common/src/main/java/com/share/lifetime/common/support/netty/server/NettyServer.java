@@ -34,6 +34,8 @@ public class NettyServer {
                         ch.pipeline().addLast("logging", new LoggingHandler(LogLevel.TRACE));
                         ch.pipeline().addLast(new RequestDataDecoder(), new ResponseDataEncoder(),
                             new ProcessingHandler());
+                        // ch.pipeline().addLast(new ByteToStringDecoder("UTF-8"), new StringToByteEncoder("UTF-8"),
+                        // new AbstractProcessingHandler("UTF-8"));
                     }
                 }).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, false);
 
