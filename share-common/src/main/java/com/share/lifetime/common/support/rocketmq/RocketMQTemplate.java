@@ -45,6 +45,30 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
 
     private final Map<String, TransactionMQProducer> cache = new ConcurrentHashMap<>(16);
 
+    public DefaultMQProducer getProducer() {
+        return producer;
+    }
+
+    public void setProducer(DefaultMQProducer producer) {
+        this.producer = producer;
+    }
+
+    public ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public MessageQueueSelector getMessageQueueSelector() {
+        return messageQueueSelector;
+    }
+
+    public void setMessageQueueSelector(MessageQueueSelector messageQueueSelector) {
+        this.messageQueueSelector = messageQueueSelector;
+    }
+
     /**
      * 以同步模式发送消息。仅当发送过程完全完成时，此方法才会返回。 可靠的同步传输用于广泛的场景，例如重要的通知消息，SMS 通知，短信营销系统等。 此方法具有内部重试机制，即内部实现将重试 声明失败之前
      * {@link DefaultMQProducer#getRetryTimesWhenSendFailed}次。结果，多个 消息可能会传递给经纪人。应用程序开发人员可以自行解决问题 重复问题。

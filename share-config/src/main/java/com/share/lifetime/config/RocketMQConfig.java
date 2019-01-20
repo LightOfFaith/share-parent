@@ -33,7 +33,6 @@ public class RocketMQConfig {
         producer.setSendMessageTimeout(env.getProperty("rocketmq.send.message.timeout", Integer.class));
         properties.setProducer(producer);
         return properties;
-
     }
 
     @Bean("defaultMQProducer")
@@ -52,5 +51,28 @@ public class RocketMQConfig {
         producer.setRetryAnotherBrokerWhenNotStoreOK(producerConfig.isRetryNextServer());
         return producer;
     }
+
+    // @Bean(value = "defaultMQProducer", destroyMethod = "destroy")
+    // @DependsOn(value = {"defaultMQProducer", "rocketMQMessageObjectMapper"})
+    // public RocketMQTemplate rocketMQTemplate(DefaultMQProducer defaultMQProducer,
+    // ObjectMapper rocketMQMessageObjectMapper) {
+    // RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
+    // rocketMQTemplate.setProducer(defaultMQProducer);
+    // rocketMQTemplate.setObjectMapper(rocketMQMessageObjectMapper);
+    // return rocketMQTemplate;
+    // }
+
+    // @Bean
+    // @DependsOn(value = {"rocketMQTemplate"})
+    // public TransactionHandlerRegistry transactionHandlerRegistry(RocketMQTemplate rocketMQTemplate) {
+    // return new TransactionHandlerRegistry(template);
+    // }
+
+    // @Bean(name = RocketMQConfigUtils.ROCKETMQ_TRANSACTION_ANNOTATION_PROCESSOR_BEAN_NAME)
+    // @DependsOn(value = {"transactionHandlerRegistry"})
+    // public static RocketMQTransactionAnnotationProcessor
+    // transactionAnnotationProcessor(TransactionHandlerRegistry transactionHandlerRegistry) {
+    // return new RocketMQTransactionAnnotationProcessor(transactionHandlerRegistry);
+    // }
 
 }
