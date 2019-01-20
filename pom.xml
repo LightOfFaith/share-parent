@@ -12,8 +12,6 @@
 		<module>share-api</module>
 		<module>share-web</module>
 		<module>share-biz</module>
-		<module>share-service</module>
-		<module>share-dao</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -30,11 +28,14 @@
 		<skip.it>false</skip.it>
 		<junit.version>4.12</junit.version>
 		<spring.version>4.3.22.RELEASE</spring.version>
-		<spring-data.version>2.1.3.RELEASE</spring-data.version>
+		<spring-data-commons.version>1.13.15.RELEASE</spring-data-commons.version>
+		<spring-data.version>1.8.18.RELEASE</spring-data.version>
 		<slf4j.version>1.7.21</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
 		<logback.version>1.1.7</logback.version>
 		<mybatis.version>3.4.6</mybatis.version>
 		<mybatis-spring.version>1.3.2</mybatis-spring.version>
+		<mysql.version>6.0.6</mysql.version>
 		<druid.version>1.1.10</druid.version>
 		<fastjson.version>1.2.47</fastjson.version>
 		<guava.version>27.0.1-jre</guava.version>
@@ -60,6 +61,7 @@
 		<springfox.version>2.9.2</springfox.version>
 		<jackson.version>2.9.5</jackson.version>
 		<rocketmq.version>4.3.2</rocketmq.version>
+		<netty.version>4.1.22.Final</netty.version>
 
 	</properties>
 
@@ -151,7 +153,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-commons</artifactId>
-				<version>${spring-data.version}</version>
+				<version>${spring-data-commons.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.data</groupId>
@@ -162,6 +164,16 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -177,6 +189,11 @@
 				<groupId>org.mybatis</groupId>
 				<artifactId>mybatis-spring</artifactId>
 				<version>${mybatis-spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
@@ -340,7 +357,11 @@
 				<artifactId>rocketmq-common</artifactId>
 				<version>${rocketmq.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>${netty.version}</version>
+			</dependency>
 
 
 

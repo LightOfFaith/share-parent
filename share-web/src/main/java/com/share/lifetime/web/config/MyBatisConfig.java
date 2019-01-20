@@ -7,15 +7,10 @@ import javax.sql.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.stereotype.Controller;
 
 /**
  * 
@@ -23,9 +18,7 @@ import org.springframework.stereotype.Controller;
  * @date 2019/01/17
  */
 @Configuration
-@ComponentScans(value = {@ComponentScan(basePackages = {""},
-    excludeFilters = {@Filter(classes = {Controller.class}, type = FilterType.ANNOTATION)})})
-@MapperScan(basePackages = {""})
+@MapperScan(basePackages = {"com.share.lifetime.biz.mapper"})
 public class MyBatisConfig {
 
     @Bean

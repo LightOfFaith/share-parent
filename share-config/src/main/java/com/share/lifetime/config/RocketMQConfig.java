@@ -28,7 +28,7 @@ public class RocketMQConfig {
         producer.setProducerGroup(env.getProperty("rocketmq.producer.group", String.class));
         producer.setRetryNextServer(env.getProperty("rocketmq.retry.next.server", Boolean.class));
         producer.setRetryTimesWhenSendAsyncFailed(
-            env.getProperty("rocketmq.retry。times。when。send。async。failed", Integer.class));
+            env.getProperty("rocketmq.retry.times.when.send.async.failed", Integer.class));
         producer.setRetryTimesWhenSendFailed(env.getProperty("rocketmq.retry.times.when.send.failed", Integer.class));
         producer.setSendMessageTimeout(env.getProperty("rocketmq.send.message.timeout", Integer.class));
         properties.setProducer(producer);
