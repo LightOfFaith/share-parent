@@ -1,4 +1,4 @@
-package com.share.lifetime.common.support.rocketmq;
+package com.share.lifetime.common.support.rocketmq.spring;
 
 /**
  * 表示在数据交换期间使用的RocketMQ消息协议。

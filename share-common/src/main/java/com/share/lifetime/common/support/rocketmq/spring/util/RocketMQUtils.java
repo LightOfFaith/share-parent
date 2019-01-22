@@ -1,4 +1,4 @@
-package com.share.lifetime.common.support.rocketmq.util;
+package com.share.lifetime.common.support.rocketmq.spring.util;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
@@ -13,9 +13,9 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.support.MessageBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.share.lifetime.common.support.rocketmq.RocketMQHeaders;
-import com.share.lifetime.common.support.rocketmq.RocketMQLocalTransactionListener;
-import com.share.lifetime.common.support.rocketmq.RocketMQLocalTransactionStateEnum;
+import com.share.lifetime.common.support.rocketmq.spring.RocketMQHeaders;
+import com.share.lifetime.common.support.rocketmq.spring.RocketMQLocalTransactionListener;
+import com.share.lifetime.common.support.rocketmq.spring.RocketMQLocalTransactionStateEnum;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

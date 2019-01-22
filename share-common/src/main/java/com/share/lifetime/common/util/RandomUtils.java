@@ -227,6 +227,13 @@ public class RandomUtils {
     }
 
     /**
+     * 随机数字，固定长度
+     */
+    public static String randomStringFixLength(String prefix, int length) {
+        return prefix + RandomStringUtils.random(length, 0, 0, false, true, null, threadLocalRandom());
+    }
+
+    /**
      * 随机字母或数字，固定长度
      */
     public static String randomStringFixLength(Random random, int length) {

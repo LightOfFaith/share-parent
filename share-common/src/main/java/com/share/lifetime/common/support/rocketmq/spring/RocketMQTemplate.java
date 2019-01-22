@@ -1,4 +1,4 @@
-package com.share.lifetime.common.support.rocketmq;
+package com.share.lifetime.common.support.rocketmq.spring;
 
 import java.util.Map;
 import java.util.Objects;
@@ -26,8 +26,8 @@ import org.springframework.util.MimeTypeUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.share.lifetime.common.support.rocketmq.util.RocketMQConfigUtils;
-import com.share.lifetime.common.support.rocketmq.util.RocketMQUtils;
+import com.share.lifetime.common.support.rocketmq.spring.util.RocketMQConfigUtils;
+import com.share.lifetime.common.support.rocketmq.spring.util.RocketMQUtils;
 
 import lombok.extern.slf4j.Slf4j;
 

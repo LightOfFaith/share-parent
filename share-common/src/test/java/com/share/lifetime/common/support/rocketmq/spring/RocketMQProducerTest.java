@@ -1,4 +1,4 @@
-package com.share.lifetime.common.support.rocketmq;
+package com.share.lifetime.common.support.rocketmq.spring;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +10,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.share.lifetime.common.support.rocketmq.spring.RocketMQTemplate;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.share.lifetime.common.support.rocketmq;
+package com.share.lifetime.common.support.rocketmq.spring;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -26,7 +26,8 @@ public class RocketMQConsumerTest {
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
 
                 log.info(String.format("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs));
-                byte[] body = msgs.get(0).getBody();
+                MessageExt messageExt = msgs.get(0);
+                byte[] body = messageExt.getBody();
                 try {
                     log.info("body:{}", new String(body, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {

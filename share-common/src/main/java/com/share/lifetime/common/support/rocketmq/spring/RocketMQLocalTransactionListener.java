@@ -1,4 +1,4 @@
-package com.share.lifetime.common.support.rocketmq;
+package com.share.lifetime.common.support.rocketmq.spring;
 
 import org.springframework.messaging.Message;
 

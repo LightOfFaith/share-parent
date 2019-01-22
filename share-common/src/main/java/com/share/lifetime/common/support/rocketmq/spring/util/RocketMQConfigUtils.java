@@ -1,4 +1,4 @@
- package com.share.lifetime.common.support.rocketmq.util;
+ package com.share.lifetime.common.support.rocketmq.spring.util;
 
  public class RocketMQConfigUtils {
      

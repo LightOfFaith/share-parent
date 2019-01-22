@@ -124,8 +124,21 @@
 			<artifactId>rocketmq-common</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.rocketmq</groupId>
+			<artifactId>rocketmq-store</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.rocketmq</groupId>
+			<artifactId>rocketmq-broker</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.aliyun.openservices</groupId>
+			<artifactId>ons-client</artifactId>
+			</dependency>
 	</dependencies>
 </project>
