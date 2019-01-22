@@ -7,6 +7,8 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.TransactionListener;
+import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 public class RocketMQClientImpl implements RocketMQClient {
@@ -145,6 +147,20 @@ public class RocketMQClientImpl implements RocketMQClient {
 
         String messageModel = properties.getProperty(RocketMQKeyConst.MessageModel, RocketMQValueConst.CLUSTERING);
         defaultMQPushConsumer.setMessageModel(MessageModel.valueOf(messageModel));
+    }
+
+    @Override
+    public TransactionMQProducer createTransactionProducer(Properties properties,
+        TransactionListener transactionListener) {
+        TransactionMQProducer transactionMQProducer = new TransactionMQProducer();
+        transactionMQProducer.setProducerGroup(properties.getProperty(RocketMQKeyConst.ProducerId));
+        boolean isVipChannelEnabled =
+            Boolean.parseBoolean(properties.getProperty(RocketMQKeyConst.isVipChannelEnabled, "false"));
+        transactionMQProducer.setVipChannelEnabled(isVipChannelEnabled);
+        String instanceName = properties.getProperty(RocketMQKeyConst.InstanceName, this.buildIntanceName());
+        transactionMQProducer.setInstanceName(instanceName);
+        transactionMQProducer.setTransactionListener(transactionListener);
+        return transactionMQProducer;
     }
 
 }
