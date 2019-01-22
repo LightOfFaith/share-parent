@@ -71,7 +71,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
 
     /**
      * 以同步模式发送消息。仅当发送过程完全完成时，此方法才会返回。 可靠的同步传输用于广泛的场景，例如重要的通知消息，SMS 通知，短信营销系统等。 此方法具有内部重试机制，即内部实现将重试 声明失败之前
-     * {@link DefaultMQProducer#getRetryTimesWhenSendFailed}次。结果，多个 消息可能会传递给经纪人。应用程序开发人员可以自行解决问题 重复问题。
+     * {@link DefaultMQProducer#getRetryTimesWhenSendFailed}次。结果，多个 消息可能会传递给经纪人。应用程序开发人员可以自行解决重复问题。
      * 
      * @param destination
      *            格式: `topicName:tags`
@@ -84,14 +84,14 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #syncSend(String, Message)} 相同，另外还指定了发送超时。
+     * 与 {@link #syncSend(String, Message)} 相同，另外还指定了发送超时时间。
      * 
      * @param destination
      *            格式: `topicName:tags`
      * @param message
      *            {@link org.springframework.messaging.Message}
      * @param timeout
-     *            发送超时(单位：毫秒)
+     *            发送超时时间(单位:毫秒)
      * @return { @link SendResult}
      */
     public SendResult syncSend(String destination, Message<?> message, long timeout) {
@@ -99,14 +99,14 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #syncSend(String, Message)} 相同，另外还指定了发送超时。
+     * 与 {@link #syncSend(String, Message, long)} 相同，另外还指定了延迟消息的级别。
      * 
      * @param destination
      *            格式: `topicName:tags`
      * @param message
      *            {@link org.springframework.messaging.Message}
      * @param timeout
-     *            发送超时(单位：毫秒)
+     *            发送超时时间(单位:毫秒)
      * @param delayLevel
      *            延迟消息的级别
      * @return { @link SendResult}
@@ -135,6 +135,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
+     * 与 {@link #syncSend(String, Message)}相同
      * 
      * @param destination
      *            格式: `topicName:tags`
@@ -147,13 +148,14 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
+     * 与 {@link #syncSend(String, Object)}相同，另外还指定了发送超时时间。
      * 
      * @param destination
      *            格式: `topicName:tags`
      * @param payload
      *            用作有效载荷的对象
      * @param timeout
-     *            发送超时(单位：毫秒)
+     *            发送超时时间(单位:毫秒)
      * @return
      */
     public SendResult syncSend(String destination, Object payload, long timeout) {
@@ -177,7 +179,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #syncSendOrderly(String, Message, String)}相同，并另外指定发送超时。
+     * 与 {@link #syncSendOrderly(String, Message, String)}相同，另外还指定了发送超时时间。
      * 
      * @param destination
      *            格式: `topicName:tags`
@@ -186,7 +188,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
      * @param hashKey
      *            使用此键选择队列。例如：orderId，productId ......
      * @param timeout
-     *            发送超时(单位：毫秒)
+     *            发送超时时间(单位:毫秒)
      * @return
      */
     public SendResult syncSendOrderly(String destination, Message<?> message, String hashKey, long timeout) {
@@ -210,6 +212,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
+     * 与 {@link #syncSendOrderly(String, Message)}相同，并且指定发送有序的hashKey。
      * 
      * @param destination
      * @param payload
@@ -220,13 +223,23 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         return syncSendOrderly(destination, payload, hashKey, producer.getSendMsgTimeout());
     }
 
+    /**
+     * 与 {@link #syncSendOrderly(String, Message, String)}相同，另外还指定了发送超时时间。
+     * 
+     * @param destination
+     * @param payload
+     * @param hashKey
+     * @param timeout
+     * @return
+     */
     public SendResult syncSendOrderly(String destination, Object payload, String hashKey, long timeout) {
         Message<?> message = this.doConvert(payload, null, null);
         return syncSendOrderly(destination, message, hashKey, producer.getSendMsgTimeout());
     }
 
     /**
-     * {@link #asyncSend(String, Message, SendCallback)}
+     * 
+     * 与{@link #asyncSend(String, Message, SendCallback)}相同，另外还指定了发送超时时间。
      * 
      * @param destination
      * @param message
@@ -261,11 +274,27 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         asyncSend(destination, message, sendCallback, producer.getSendMsgTimeout());
     }
 
+    /**
+     * 
+     * 与{@link #asyncSend(String, Message, SendCallback)}相同，另外还指定了发送超时时间。
+     * 
+     * @param destination
+     * @param payload
+     * @param sendCallback
+     * @param timeout
+     */
     public void asyncSend(String destination, Object payload, SendCallback sendCallback, long timeout) {
         Message<?> message = this.doConvert(payload, null, null);
         asyncSend(destination, message, sendCallback, timeout);
     }
 
+    /**
+     * 与{@link #asyncSend(String, Message, SendCallback)}相同。
+     * 
+     * @param destination
+     * @param payload
+     * @param sendCallback
+     */
     public void asyncSend(String destination, Object payload, SendCallback sendCallback) {
         asyncSend(destination, payload, sendCallback, producer.getSendMsgTimeout());
     }
@@ -297,7 +326,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #asyncSend(String, Message, SendCallback)}相同，并通过指定的hashKey顺序发送。
+     * 与{@link #asyncSendOrderly(String, Object, String, SendCallback)}相同。
      * 
      * @param destination
      * @param message
@@ -309,10 +338,27 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         asyncSendOrderly(destination, message, hashKey, sendCallback, producer.getSendMsgTimeout());
     }
 
+    /**
+     * 与 {@link #asyncSendOrderly(String, Message, SendCallback)}相同，并通过指定的hashKey顺序发送。
+     * 
+     * @param destination
+     * @param payload
+     * @param hashKey
+     * @param sendCallback
+     */
     public void asyncSendOrderly(String destination, Object payload, String hashKey, SendCallback sendCallback) {
         asyncSendOrderly(destination, payload, hashKey, sendCallback, producer.getSendMsgTimeout());
     }
 
+    /**
+     * 与{@link #asyncSendOrderly(String, Object, String, SendCallback)}相同，另外并指定发送超时 。
+     * 
+     * @param destination
+     * @param payload
+     * @param hashKey
+     * @param sendCallback
+     * @param timeout
+     */
     public void asyncSendOrderly(String destination, Object payload, String hashKey, SendCallback sendCallback,
         long timeout) {
         Message<?> message = this.doConvert(payload, null, null);
@@ -342,6 +388,12 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         }
     }
 
+    /**
+     * 与{@link #sendOneWay(String, Message)}相同。
+     * 
+     * @param destination
+     * @param payload
+     */
     public void sendOneWay(String destination, Object payload) {
         Message<?> message = this.doConvert(payload, null, null);
         sendOneWay(destination, message);
@@ -371,6 +423,13 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         }
     }
 
+    /**
+     * 与{@link #sendOneWay(String, Message)}相同，使用hashKey按顺序发送。
+     * 
+     * @param destination
+     * @param payload
+     * @param hashKey
+     */
     public void sendOneWayOrderly(String destination, Object payload, String hashKey) {
         Message<?> message = this.doConvert(payload, null, null);
         sendOneWayOrderly(destination, message, hashKey);
@@ -398,6 +457,9 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
 
     }
 
+    /**
+     * 与 {@link #syncSend(String, Message)} 相同
+     */
     @Override
     protected void doSend(String destination, Message<?> message) {
         SendResult sendResult = syncSend(destination, message);
