@@ -326,7 +326,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与{@link #asyncSendOrderly(String, Object, String, SendCallback)}相同。
+     * 与{@link #asyncSendOrderly(String, Message, SendCallback)}相同，并使用hashKey按顺序发送。
      * 
      * @param destination
      * @param message
@@ -339,7 +339,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #asyncSendOrderly(String, Message, SendCallback)}相同，并通过指定的hashKey顺序发送。
+     * 与 {@link #asyncSendOrderly(String, Message, String, SendCallback)}相同。
      * 
      * @param destination
      * @param payload
@@ -424,7 +424,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与{@link #sendOneWay(String, Message)}相同，使用hashKey按顺序发送。
+     * 与{@link #sendOneWayOrderly(String, Message, String)}相同。
      * 
      * @param destination
      * @param payload
