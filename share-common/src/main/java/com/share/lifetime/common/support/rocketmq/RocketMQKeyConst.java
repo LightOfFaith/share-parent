@@ -5,21 +5,21 @@ public class RocketMQKeyConst {
     /**
      * 消费模式，包括集群模式、广播模式
      */
-    public static final String MessageModel = "MessageModel";
+    public static final String MessageModel = "rocketmq.message.model";
 
     /**
      * Producer的标识
      */
-    public static final String ProducerId = "ProducerId";
+    public static final String ProducerId = "rocketmq.producer.group";
 
     /**
      * Consumer的标识
      */
-    public static final String ConsumerId = "ConsumerId";
+    public static final String ConsumerId = "rocketmq.consumer.group";
     /**
      * 消息发送超时时间，如果服务端在配置的对应时间内未ACK，则发送客户端认为该消息发送失败。
      */
-    public static final String SendMsgTimeoutMillis = "SendMsgTimeoutMillis";
+    public static final String SendMsgTimeoutMillis = "rocketmq.send.msg.timeout.millis";
 
     /**
      * Name Server地址(格式为:主机:端口;主机:端口)
@@ -29,12 +29,12 @@ public class RocketMQKeyConst {
     /**
      * 消费线程数量
      */
-    public static final String ConsumeThreadNums = "ConsumeThreadNums";
+    public static final String ConsumeThreadNums = "rocketmq.consume.thread.nums";
 
     /**
      * 是否启动vip channel
      */
-    public static final String isVipChannelEnabled = "isVipChannelEnabled";
+    public static final String isVipChannelEnabled = "rocketmq.is.vip.channel.enabled";
 
     /**
      * 顺序消息消费失败进行重试前的等待时间 单位(毫秒)
@@ -44,12 +44,12 @@ public class RocketMQKeyConst {
     /**
      * 消息消费失败时的最大重试次数
      */
-    public static final String MaxReconsumeTimes = "maxReconsumeTimes";
+    public static final String MaxReconsumeTimes = "rocketmq.max.reconsume.times";
 
     /**
      * 设置每条消息消费的最大超时时间,超过这个时间,这条消息将会被视为消费失败,等下次重新投递再次消费. 每个业务需要设置一个合理的值. 单位(分钟)
      */
-    public static final String ConsumeTimeout = "consumeTimeout";
+    public static final String ConsumeTimeout = "rocketmq.consume.timeout";
     /**
      * 设置事务消息的第一次回查延迟时间
      */
@@ -58,7 +58,7 @@ public class RocketMQKeyConst {
     /**
      * 是否每次请求都带上最新的订阅关系
      */
-    public static final String PostSubscriptionWhenPull = "PostSubscriptionWhenPull";
+    public static final String PostSubscriptionWhenPull = "rocketmq.post.subscription.when.pull";
 
     /**
      * BatchConsumer每次批量消费的最大消息数量, 默认值为1, 允许自定义范围为[1, 32], 实际消费数量可能小于该值.

@@ -25,4 +25,13 @@ public interface RocketMQClient {
      */
     DefaultMQPushConsumer createConsumer(final Properties properties);
 
+    /**
+     * 根据自定义的属性创建一个支持批量消费的{@code DefaultMQPushConsumer}实例，具体支持的属性详见{@link RocketMQKeyConst}
+     *
+     * @param properties
+     *            构造{@code DefaultMQPushConsumer}实例的属性
+     * @return {@code DefaultMQPushConsumer}实例，用于订阅Topic进行批量的消息消费
+     */
+    DefaultMQPushConsumer createBatchConsumer(final Properties properties);
+
 }
