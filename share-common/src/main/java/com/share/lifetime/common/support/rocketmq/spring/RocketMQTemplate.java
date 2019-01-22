@@ -212,7 +212,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #syncSendOrderly(String, Message)}相同，并且指定发送有序的hashKey。
+     * 与 {@link #syncSend(String, Object)}相同，并且指定发送有序的hashKey。
      * 
      * @param destination
      * @param payload
@@ -224,7 +224,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
     }
 
     /**
-     * 与 {@link #syncSendOrderly(String, Message, String)}相同，另外还指定了发送超时时间。
+     * 与 {@link #syncSendOrderly(String, Object, String)}相同，另外还指定了发送超时时间。
      * 
      * @param destination
      * @param payload
@@ -234,7 +234,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
      */
     public SendResult syncSendOrderly(String destination, Object payload, String hashKey, long timeout) {
         Message<?> message = this.doConvert(payload, null, null);
-        return syncSendOrderly(destination, message, hashKey, producer.getSendMsgTimeout());
+        return syncSendOrderly(destination, message, hashKey, timeout);
     }
 
     /**
@@ -276,7 +276,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
 
     /**
      * 
-     * 与{@link #asyncSend(String, Message, SendCallback)}相同，另外还指定了发送超时时间。
+     * 与{@link #asyncSend(String, Object, SendCallback)}相同，另外还指定了发送超时时间。
      * 
      * @param destination
      * @param payload
@@ -457,9 +457,6 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
 
     }
 
-    /**
-     * 与 {@link #syncSend(String, Message)} 相同
-     */
     @Override
     protected void doSend(String destination, Message<?> message) {
         SendResult sendResult = syncSend(destination, message);
