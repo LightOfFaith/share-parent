@@ -74,5 +74,10 @@ public class RocketMQConfig {
     // transactionAnnotationProcessor(TransactionHandlerRegistry transactionHandlerRegistry) {
     // return new RocketMQTransactionAnnotationProcessor(transactionHandlerRegistry);
     // }
+//
+//    @Bean
+//    public ObjectMapper rocketMQMessageObjectMapper() {
+//        return new ObjectMapper();
+//    }
 
 }
