@@ -236,6 +236,18 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         Message<?> message = this.doConvert(payload, null, null);
         return syncSendOrderly(destination, message, hashKey, timeout);
     }
+    
+    /**
+     * 异步发送消息到代理。异步传输通常用于响应时间敏感 业务场景。 此方法立即返回。发送完成后，将执行<code>sendCallback</code> 与{@link #syncSend(String, Object)}
+     * 类似，内部实现可能会重试{@link DefaultMQProducer#getRetryTimesWhenSendAsyncFailed}次声明发送失败，可能会产生消息重复和应用程序开发人员是解决此潜在问题的人。
+     * 
+     * @param destination
+     * @param message
+     * @param sendCallback
+     */
+    public void asyncSend(String destination, Message<?> message, SendCallback sendCallback) {
+        asyncSend(destination, message, sendCallback, producer.getSendMsgTimeout());
+    }
 
     /**
      * 
@@ -261,17 +273,16 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
             throw new MessagingException(e.getMessage(), e);
         }
     }
-
+    
     /**
-     * 异步发送消息到代理。异步传输通常用于响应时间敏感 业务场景。 此方法立即返回。发送完成后，将执行<code>sendCallback</code> 与{@link #syncSend(String, Object)}
-     * 类似，内部实现可能会重试{@link DefaultMQProducer#getRetryTimesWhenSendAsyncFailed}次声明发送失败，可能会产生消息重复和应用程序开发人员是解决此潜在问题的人。
+     * 与{@link #asyncSend(String, Message, SendCallback)}相同。
      * 
      * @param destination
-     * @param message
+     * @param payload
      * @param sendCallback
      */
-    public void asyncSend(String destination, Message<?> message, SendCallback sendCallback) {
-        asyncSend(destination, message, sendCallback, producer.getSendMsgTimeout());
+    public void asyncSend(String destination, Object payload, SendCallback sendCallback) {
+        asyncSend(destination, payload, sendCallback, producer.getSendMsgTimeout());
     }
 
     /**
@@ -287,16 +298,18 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
         Message<?> message = this.doConvert(payload, null, null);
         asyncSend(destination, message, sendCallback, timeout);
     }
-
+    
     /**
-     * 与{@link #asyncSend(String, Message, SendCallback)}相同。
+     * 与{@link #asyncSend(String, Message, SendCallback)}相同，并使用hashKey按顺序发送。
      * 
      * @param destination
-     * @param payload
+     * @param message
+     * @param hashKey
+     *            使用此键选择队列。例如：orderId，productId ......
      * @param sendCallback
      */
-    public void asyncSend(String destination, Object payload, SendCallback sendCallback) {
-        asyncSend(destination, payload, sendCallback, producer.getSendMsgTimeout());
+    public void asyncSendOrderly(String destination, Message<?> message, String hashKey, SendCallback sendCallback) {
+        asyncSendOrderly(destination, message, hashKey, sendCallback, producer.getSendMsgTimeout());
     }
 
     /**
@@ -323,19 +336,6 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
             log.error("asyncSendOrderly failed. destination:{}, message:{} ", destination, message);
             throw new MessagingException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * 与{@link #asyncSendOrderly(String, Message, SendCallback)}相同，并使用hashKey按顺序发送。
-     * 
-     * @param destination
-     * @param message
-     * @param hashKey
-     *            使用此键选择队列。例如：orderId，productId ......
-     * @param sendCallback
-     */
-    public void asyncSendOrderly(String destination, Message<?> message, String hashKey, SendCallback sendCallback) {
-        asyncSendOrderly(destination, message, hashKey, sendCallback, producer.getSendMsgTimeout());
     }
 
     /**
@@ -387,18 +387,7 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
             throw new MessagingException(e.getMessage(), e);
         }
     }
-
-    /**
-     * 与{@link #sendOneWay(String, Message)}相同。
-     * 
-     * @param destination
-     * @param payload
-     */
-    public void sendOneWay(String destination, Object payload) {
-        Message<?> message = this.doConvert(payload, null, null);
-        sendOneWay(destination, message);
-    }
-
+    
     /**
      * 与{@link #sendOneWay(String, Message)}相同，使用hashKey按顺序发送。
      * 
@@ -421,6 +410,17 @@ public class RocketMQTemplate extends AbstractMessageSendingTemplate<String>
             log.error("sendOneWayOrderly failed. destination:{}, message:{}", destination, message);
             throw new MessagingException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * 与{@link #sendOneWay(String, Message)}相同。
+     * 
+     * @param destination
+     * @param payload
+     */
+    public void sendOneWay(String destination, Object payload) {
+        Message<?> message = this.doConvert(payload, null, null);
+        sendOneWay(destination, message);
     }
 
     /**
