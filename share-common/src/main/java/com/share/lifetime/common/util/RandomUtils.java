@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RandomUtils {
 
+    private static final String SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     public static Random threadLocalRandom() {
         return ThreadLocalRandom.current();
     }
@@ -230,6 +232,7 @@ public class RandomUtils {
      * 随机数字，固定长度
      */
     public static String randomStringFixLength(String prefix, int length) {
+        length = length - prefix.length();
         return prefix + RandomStringUtils.random(length, 0, 0, false, true, null, threadLocalRandom());
     }
 
@@ -310,4 +313,18 @@ public class RandomUtils {
     public static String randomAsciiRandomLength(Random random, int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(random, minLength, maxLength), 32, 127, false, false, null, random);
     }
+
+    /**
+     * 获取随机字符串 Nonce Str，固定长度
+     *
+     * @return String 随机字符串
+     */
+    public static String generateNonceStr(int length) {
+        char[] nonceChars = new char[length];
+        for (int index = 0; index < nonceChars.length; ++index) {
+            nonceChars[index] = SYMBOLS.charAt(secureRandom().nextInt(SYMBOLS.length()));
+        }
+        return new String(nonceChars);
+    }
+
 }
