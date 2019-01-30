@@ -420,4 +420,22 @@ public class DateUtils {
         return MONTH_LENGTH[month];
     }
 
+    /**
+     * 获取当前时间戳，单位秒
+     * 
+     * @return
+     */
+    public static long getCurrentTimestamp() {
+        return System.currentTimeMillis() / 1000;
+    }
+
+    /**
+     * 获取当前时间戳，单位毫秒
+     * 
+     * @return
+     */
+    public static long getCurrentTimestampMs() {
+        return System.currentTimeMillis();
+    }
+
 }

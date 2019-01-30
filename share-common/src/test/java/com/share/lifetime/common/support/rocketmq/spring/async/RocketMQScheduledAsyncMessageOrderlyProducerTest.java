@@ -21,13 +21,13 @@ import com.share.lifetime.common.util.RandomUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RocketMQScheduledAsyncMessageProducerTest {
+public class RocketMQScheduledAsyncMessageOrderlyProducerTest {
 
     // private String messageDelayLevel = "1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h";
 
     public static void main(String[] args) throws MQClientException {
 
-        StopWatch stopWatch = new StopWatch("RocketMQScheduledAsyncMessageProducerTest");
+        StopWatch stopWatch = new StopWatch("RocketMQScheduledAsyncMessageOrderlyProducerTest");
         stopWatch.start();
         DefaultMQProducer producer = new DefaultMQProducer("group1");
         producer.setNamesrvAddr("192.168.43.145:9876");
@@ -107,7 +107,7 @@ public class RocketMQScheduledAsyncMessageProducerTest {
         // Scheduled_Topic(Message 所属的 Topic)
         // TagA( Message Tag, 可理解为 Email 中的标签，对消息进行再归类，方便 Consumer 指定过滤条件在消息队列 RocketMQ 的服务器过滤)
         //// getPayload(Message Body 可以是任何二进制形式的数据， 消息队列 RocketMQ 不做任何干预，需要 Producer 与 Consumer 协商好一致的序列化和反序列化方式)
-        String destination = "Scheduled_Async_Topic:TagA";
+        String destination = "Scheduled_Async_Orderly_Topic:TagA";
 
         // 异步发送消息, 发送结果通过 callback 返回给客户端。
         SendCallback sendCallback = new SendCallback() {

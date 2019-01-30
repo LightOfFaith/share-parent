@@ -3,6 +3,7 @@ package com.share.lifetime.common.constant;
 import java.io.File;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.http.client.HttpClient;
 
 public class Consts {
 
@@ -68,5 +69,26 @@ public class Consts {
     public static final String CLASSPATH_PREFIX = "classpath";
 
     public static final String URL_PROTOCOL_FILE = "file";
+
+    public static final String SDK_VERSION = "SDK/3.0.9";
+
+    public static final String USER_AGENT =
+        SDK_VERSION + " (" + System.getProperty("os.arch") + " " + System.getProperty("os.name") + " "
+            + System.getProperty("os.version") + ") Java/" + System.getProperty("java.version") + " HttpClient/"
+            + HttpClient.class.getPackage().getImplementationVersion();
+
+    /**
+     * HTTP(S) 读数据超时时间，单位毫秒
+     */
+    public static final int HTTP_READ_TIMEOUT_MS = 8 * 1000;
+
+    /**
+     * HTTP(S) 连接超时时间，单位毫秒
+     */
+    public static final int HTTP_CONNECT_TIMEOUT_MS = 6 * 1000;
+
+    public static final String FAIL = "FAIL";
+
+    public static final String SUCCESS = "SUCCESS";
 
 }

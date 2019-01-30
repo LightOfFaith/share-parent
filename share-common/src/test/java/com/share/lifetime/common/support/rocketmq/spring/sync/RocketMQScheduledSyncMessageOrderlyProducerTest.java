@@ -1,13 +1,10 @@
-package com.share.lifetime.common.support.rocketmq.spring.async;
+package com.share.lifetime.common.support.rocketmq.spring.sync;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendCallback;
-import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.util.StopWatch;
@@ -21,13 +18,13 @@ import com.share.lifetime.common.util.RandomUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RocketMQScheduledAsyncMessageProducerTest {
+public class RocketMQScheduledSyncMessageOrderlyProducerTest {
 
     // private String messageDelayLevel = "1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h";
 
     public static void main(String[] args) throws MQClientException {
 
-        StopWatch stopWatch = new StopWatch("RocketMQScheduledAsyncMessageProducerTest");
+        StopWatch stopWatch = new StopWatch("RocketMQScheduledSyncMessageOrderlyProducerTest");
         stopWatch.start();
         DefaultMQProducer producer = new DefaultMQProducer("group1");
         producer.setNamesrvAddr("192.168.43.145:9876");
@@ -107,28 +104,11 @@ public class RocketMQScheduledAsyncMessageProducerTest {
         // Scheduled_Topic(Message 所属的 Topic)
         // TagA( Message Tag, 可理解为 Email 中的标签，对消息进行再归类，方便 Consumer 指定过滤条件在消息队列 RocketMQ 的服务器过滤)
         //// getPayload(Message Body 可以是任何二进制形式的数据， 消息队列 RocketMQ 不做任何干预，需要 Producer 与 Consumer 协商好一致的序列化和反序列化方式)
-        String destination = "Scheduled_Async_Topic:TagA";
-
-        // 异步发送消息, 发送结果通过 callback 返回给客户端。
-        SendCallback sendCallback = new SendCallback() {
-
-            @Override
-            public void onSuccess(SendResult sendResult) {
-                // 消费发送成功
-                log.info("send message success. topic={}, msgId={}", sendResult.getMessageQueue().getTopic(),
-                    sendResult.getMsgId());
-            }
-
-            @Override
-            public void onException(Throwable e) {
-                // 消息发送失败，需要进行重试处理，可重新发送这条消息或持久化这条数据进行补偿处理
-                log.error("Send mq message failed. Topic is:{},exception:{}", ExceptionUtils.getStackTrace(e));
-            }
-        };
+        String destination = "Scheduled_Sync_Orderly_Topic:TagA";
         //// 分区顺序消息中区分不同分区的关键字段，sharding key 于普通消息的 key 是完全不同的概念。
         // 全局顺序消息，该字段可以设置为任意非空字符串。
         String shardingKey = String.valueOf(orderId);
-        rocketMQTemplate.asyncSendOrderly(destination, message, shardingKey, sendCallback);
+        rocketMQTemplate.syncSendOrderly(destination, message, shardingKey);
 
         // 在 callback 返回之前即可取得 msgId。
         log.info("send message async. topic=" + message.getHeaders() + ", msgId=" + message.getPayload());
