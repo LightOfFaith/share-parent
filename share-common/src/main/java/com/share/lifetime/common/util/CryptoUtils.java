@@ -13,6 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
 /**
@@ -230,7 +231,7 @@ public class CryptoUtils {
     }
 
     /**
-     * 生成 HMACSHA256
+     * 采用 HmacSHA256算法 + Base64，编码采用：UTF-8
      * 
      * @param data
      *            待处理数据
@@ -239,14 +240,26 @@ public class CryptoUtils {
      * @return 加密结果
      * @throws Exception
      */
-    public static String HMACSHA256(String data, String key) throws Exception {
-        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
-        sha256_HMAC.init(secret_key);
-        byte[] array = sha256_HMAC.doFinal(data.getBytes("UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        sb.append(Hex.encodeHex(array, false));
-        return sb.toString();
+    public static String hmacSHA256(String data, String key) throws Exception {
+        Mac hmacSha256 = Mac.getInstance("HmacSHA256");
+        byte[] keyBytes = key.getBytes("UTF-8");
+        hmacSha256.init(new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256"));
+        return new String(Base64.encodeBase64(hmacSha256.doFinal(data.getBytes("UTF-8"))), "UTF-8");
+    }
+
+    /**
+     * 采用HmacSHA1算法 + Base64，编码采用：UTF-8
+     * 
+     * @param data
+     * @param key
+     * @return
+     * @throws Exception
+     */
+    public static String hmacSHA1(String data, String key) throws Exception {
+        javax.crypto.Mac mac = javax.crypto.Mac.getInstance("HmacSHA1");
+        mac.init(new javax.crypto.spec.SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA1"));
+        byte[] array = mac.doFinal(data.getBytes("UTF-8"));
+        return new String(Base64.encodeBase64(array), "UTF-8");
     }
 
 }

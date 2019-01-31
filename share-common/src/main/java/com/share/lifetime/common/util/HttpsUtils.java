@@ -47,7 +47,7 @@ public class HttpsUtils {
      * @return
      * @throws Exception
      */
-    private String requestOnce(final String domain, String urlSuffix, String data, int connectTimeoutMs,
+    private static String requestOnce(final String domain, String urlSuffix, String data, int connectTimeoutMs,
         int readTimeoutMs, boolean useCert) throws Exception {
         BasicHttpClientConnectionManager connManager;
         if (useCert) {
@@ -65,8 +65,8 @@ public class HttpsUtils {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(kmf.getKeyManagers(), null, new SecureRandom());
 
-            SSLConnectionSocketFactory sslConnectionSocketFactory =
-                new SSLConnectionSocketFactory(sslContext, new String[] {"TLSv1"}, null, new DefaultHostnameVerifier());
+            SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                new String[] {"TLSv1", "TLSv1.1", "TLSv1.2"}, null, new DefaultHostnameVerifier());
 
             connManager = new BasicHttpClientConnectionManager(RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.getSocketFactory())
@@ -98,7 +98,7 @@ public class HttpsUtils {
     }
 
     @SuppressWarnings("unused")
-    private String request(String domain, String urlSuffix, String data, int connectTimeoutMs, int readTimeoutMs,
+    private static String request(String domain, String urlSuffix, String data, int connectTimeoutMs, int readTimeoutMs,
         boolean useCert) throws Exception {
         Exception exception = null;
         long elapsedTimeMillis = 0;
@@ -144,9 +144,8 @@ public class HttpsUtils {
      * @param data
      * @return
      */
-    public String requestWithoutCert(String domain, String urlSuffix, String data) throws Exception {
-        return this.request(domain, urlSuffix, data, Consts.HTTP_CONNECT_TIMEOUT_MS, Consts.HTTP_READ_TIMEOUT_MS,
-            false);
+    public static String requestWithoutCert(String domain, String urlSuffix, String data) throws Exception {
+        return request(domain, urlSuffix, data, Consts.HTTP_CONNECT_TIMEOUT_MS, Consts.HTTP_READ_TIMEOUT_MS, false);
     }
 
     /**
@@ -158,9 +157,9 @@ public class HttpsUtils {
      * @param readTimeoutMs
      * @return
      */
-    public String requestWithoutCert(String domain, String urlSuffix, String data, int connectTimeoutMs,
+    public static String requestWithoutCert(String domain, String urlSuffix, String data, int connectTimeoutMs,
         int readTimeoutMs) throws Exception {
-        return this.request(domain, urlSuffix, data, connectTimeoutMs, readTimeoutMs, false);
+        return request(domain, urlSuffix, data, connectTimeoutMs, readTimeoutMs, false);
     }
 
     /**
@@ -170,8 +169,8 @@ public class HttpsUtils {
      * @param data
      * @return
      */
-    public String requestWithCert(String domain, String urlSuffix, String data) throws Exception {
-        return this.request(domain, urlSuffix, data, Consts.HTTP_CONNECT_TIMEOUT_MS, Consts.HTTP_READ_TIMEOUT_MS, true);
+    public static String requestWithCert(String domain, String urlSuffix, String data) throws Exception {
+        return request(domain, urlSuffix, data, Consts.HTTP_CONNECT_TIMEOUT_MS, Consts.HTTP_READ_TIMEOUT_MS, true);
     }
 
     /**
@@ -183,15 +182,14 @@ public class HttpsUtils {
      * @param readTimeoutMs
      * @return
      */
-    public String requestWithCert(String domain, String urlSuffix, String data, int connectTimeoutMs, int readTimeoutMs)
-        throws Exception {
-        return this.request(domain, urlSuffix, data, connectTimeoutMs, readTimeoutMs, true);
+    public static String requestWithCert(String domain, String urlSuffix, String data, int connectTimeoutMs,
+        int readTimeoutMs) throws Exception {
+        return request(domain, urlSuffix, data, connectTimeoutMs, readTimeoutMs, true);
     }
 
     public static void main(String[] args) throws Exception {
 
-        HttpsUtils httpsUtils = new HttpsUtils();
-        System.out.println(httpsUtils.requestWithoutCert("www.baidu.com", "/", "22"));
+        System.out.println(requestWithoutCert("www.baidu.com", "/", "22"));
     }
 
 }
