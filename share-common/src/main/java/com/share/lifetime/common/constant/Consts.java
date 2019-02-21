@@ -52,17 +52,6 @@ public class Consts {
     public static final boolean IS_UNIX = SystemUtils.IS_OS_UNIX;
     public static final boolean IS_WINDOWS = SystemUtils.IS_OS_WINDOWS;
 
-    /** HTTP请求相关 **/
-    public static final String METHOD_POST = "POST";
-    public static final String METHOD_GET = "GET";
-    public static final String CTYPE_FORM_DATA = "application/x-www-form-urlencoded";
-    public static final String CTYPE_FILE_UPLOAD = "multipart/form-data";
-    public static final String CTYPE_TEXT_XML = "text/xml";
-    public static final String CTYPE_APPLICATION_XML = "application/xml";
-    public static final String CTYPE_TEXT_PLAIN = "text/plain";
-    public static final String CTYPE_APP_JSON = "application/json";
-    public static final String HTTP_HOST = "HTTP_HOST";
-
     /** UTF-8字符集 **/
     public static final String DEFAULT_CHARSET = "UTF-8";
 
@@ -70,7 +59,7 @@ public class Consts {
 
     public static final String URL_PROTOCOL_FILE = "file";
 
-    public static final String SDK_VERSION = "SDK/3.0.9";
+    public static final String SDK_VERSION = "SDK/1.0.0";
 
     public static final String USER_AGENT =
         SDK_VERSION + " (" + System.getProperty("os.arch") + " " + System.getProperty("os.name") + " "
@@ -90,5 +79,37 @@ public class Consts {
     public static final String FAIL = "FAIL";
 
     public static final String SUCCESS = "SUCCESS";
+
+    /**
+     * 换行符
+     */
+    public static final String LF = "\n";
+    /**
+     * 串联符
+     */
+    public static final String SPE1 = ",";
+    /**
+     * 示意符
+     */
+    public static final String SPE2 = ":";
+    /**
+     * 连接符
+     */
+    public static final String SPE3 = "&";
+    /**
+     * 赋值符
+     */
+    public static final String SPE4 = "=";
+    /**
+     * 问号符
+     */
+    public static final String SPE5 = "?";
+
+    /**
+     * 参与签名的系统Header前缀,只有指定前缀的Header才会参与到签名中
+     */
+    public static final String CA_HEADER_TO_SIGN_PREFIX_SYSTEM = "X-Ca-";
+
+    public static final String HTTP_HOST = "HTTP_HOST";
 
 }

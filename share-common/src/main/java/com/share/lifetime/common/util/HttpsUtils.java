@@ -38,7 +38,6 @@ public class HttpsUtils {
      * 
      * @param domain
      * @param urlSuffix
-     * @param uuid
      * @param data
      * @param connectTimeoutMs
      * @param readTimeoutMs
@@ -87,7 +86,7 @@ public class HttpsUtils {
         httpPost.setConfig(requestConfig);
 
         StringEntity postEntity = new StringEntity(data, "UTF-8");
-        httpPost.addHeader("Content-Type", "text/xml");
+        httpPost.addHeader("Content-Type", "text/xml; charset=utf-8");
         httpPost.addHeader("User-Agent", Consts.USER_AGENT + " ");
         httpPost.setEntity(postEntity);
 
@@ -185,11 +184,6 @@ public class HttpsUtils {
     public static String requestWithCert(String domain, String urlSuffix, String data, int connectTimeoutMs,
         int readTimeoutMs) throws Exception {
         return request(domain, urlSuffix, data, connectTimeoutMs, readTimeoutMs, true);
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        System.out.println(requestWithoutCert("www.baidu.com", "/", "22"));
     }
 
 }

@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.share.lifetime.common.constant.Consts;
+import com.share.lifetime.common.constant.HttpHeaderConsts;
+import com.share.lifetime.common.constant.HttpMethodConsts;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -151,7 +153,7 @@ public class WebUtils {
         OutputStream out = null;
         String rsp = null;
         try {
-            conn = getConnection(new URL(url), Consts.METHOD_POST, ctype, headerMap, proxy);
+            conn = getConnection(new URL(url), HttpMethodConsts.POST, ctype, headerMap, proxy);
             conn.setConnectTimeout(connectTimeout);
             conn.setReadTimeout(readTimeout);
             out = conn.getOutputStream();
@@ -223,7 +225,7 @@ public class WebUtils {
         try {
             String ctype = "application/x-www-form-urlencoded;charset=" + charset;
             String query = buildQuery(params, charset);
-            conn = getConnection(buildGetUrl(url, query), Consts.METHOD_GET, ctype, null, null);
+            conn = getConnection(buildGetUrl(url, query), HttpMethodConsts.GET, ctype, null, null);
             rsp = getResponseAsString(conn);
         } finally {
             if (conn != null) {
@@ -284,13 +286,13 @@ public class WebUtils {
         // Accept 请求头用来告知客户端可以处理的内容类型，这种内容类型用MIME类型来表示。借助内容协商机制,
         // 服务器可以从诸多备选项中选择一项进行应用，并使用 Content-Type 应答头通知客户端它的选择。
         // 浏览器会基于请求的上下文来为这个请求头设置合适的值，比如获取一个CSS层叠样式表时值与获取图片、视频或脚本文件时的值是不同的。
-        conn.setRequestProperty("Accept", "text/xml,text/javascript");
+        conn.setRequestProperty(HttpHeaderConsts.ACCEPT, "text/xml");
         // User-Agent 首部包含了一个特征字符串，用来让网络协议的对端来识别发起请求的用户代理软件的应用类型、操作系统、软件开发商以及版本号。
-        conn.setRequestProperty("User-Agent", "top-sdk-java");
+        conn.setRequestProperty(HttpHeaderConsts.USER_AGENT, Consts.USER_AGENT);
         // Content-Type 实体头部用于指示资源的MIME类型 media type 。
         // 在响应中，Content-Type标头告诉客户端实际返回的内容的内容类型。浏览器会在某些情况下进行MIME查找，并不一定遵循此标题的值;
         // 为了防止这种行为，可以将标题 X-Content-Type-Options 设置为 nosniff。
-        conn.setRequestProperty("Content-Type", ctype);
+        conn.setRequestProperty(HttpHeaderConsts.CONTENT_TYPE, ctype);
         if (headerMap != null) {
             for (Map.Entry<String, String> entry : headerMap.entrySet()) {
                 if (!Consts.HTTP_HOST.equals(entry.getKey())) {
