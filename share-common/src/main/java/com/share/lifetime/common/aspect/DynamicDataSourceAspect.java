@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 
-import com.share.lifetime.common.DataSourceHolder;
+import com.share.lifetime.common.DynamicDataSourceHolder;
 import com.share.lifetime.common.annotation.DynamicDataSource;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,30 +24,31 @@ public class DynamicDataSourceAspect {
 
     @Before(value = "@annotation(dynamicDataSource)")
     public void doBefore(JoinPoint joinPoint, DynamicDataSource dynamicDataSource) {
-        Method method = getMethod(joinPoint);
         String value = dynamicDataSource.value();
-        String description = dynamicDataSource.description();
+        String methodName = getMethodName(joinPoint);
         if (value != null) {
-            DataSourceHolder.setDataSource(value);
+            DynamicDataSourceHolder.putDataSourceKey(value);
         }
-        log.info("className:{},methodName:{},dynamic switch datasource:{},description:{}",
-            joinPoint.getTarget().getClass().getName(), method.getName(), value, description);
+        log.info("{}.{} dynamic switch datasource:{}", joinPoint.getTarget().getClass().getName(), methodName, value);
     }
 
     @After(value = "@annotation(dynamicDataSource)")
     public void doAfter(JoinPoint joinPoint, DynamicDataSource dynamicDataSource) {
-        Method method = getMethod(joinPoint);
+        DynamicDataSourceHolder.markDBClear();
         String value = dynamicDataSource.value();
-        String description = dynamicDataSource.description();
-        DataSourceHolder.remove();
-        log.info("className:{},methodName:{},dynamic datasource remove datasource:{},description:{} ",
-            joinPoint.getTarget().getClass().getName(), method.getName(), value, description);
+        String methodName = getMethodName(joinPoint);
+        log.info("{}.{} dynamic datasource remove datasource:{}", joinPoint.getTarget().getClass().getName(),
+            methodName, value);
     }
 
     private Method getMethod(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
         Method method = methodSignature.getMethod();
         return method;
+    }
+
+    private String getMethodName(JoinPoint joinPoint) {
+        return getMethod(joinPoint).getName();
     }
 
 }

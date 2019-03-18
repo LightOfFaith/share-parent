@@ -58,6 +58,18 @@
 			<artifactId>spring-data-redis</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
@@ -161,5 +173,45 @@
 			<artifactId>alipay-sdk-java</artifactId>
 			<version>3.4.49.ALL</version>
 		</dependency>
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-core</artifactId>
+		</dependency>
+		<dependency>
+			<artifactId>elastic-job-common-core</artifactId>
+			<groupId>com.dangdang</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>elastic-job-lite-core</artifactId>
+			<groupId>com.dangdang</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>elastic-job-lite-spring</artifactId>
+			<groupId>com.dangdang</groupId>
+		</dependency>
+
+
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>pentaho-public</id>
+			<name>Pentaho Public</name>
+			<url>https://nexus.pentaho.org/content/groups/omni/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

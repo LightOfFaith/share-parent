@@ -19,10 +19,4 @@ public @interface DynamicDataSource {
      */
     String value() default "";
 
-    /**
-     * 数据源描述
-     * 
-     * @return
-     */
-    String description() default "";
 }
